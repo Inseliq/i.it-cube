@@ -10,16 +10,18 @@ function isInternalUrl(url) {
 export default function LessonAttachments({
   lessonSlug,
   presentationUrl,
-  presentationName,
   referenceUrl,
 }) {
+  const baseUrl =
+    import.meta.env.BASE_URL
+
   return (
     <section>
       <h2>Вложения</h2>
 
       {presentationUrl && (
         <a
-          href={`/download/${lessonSlug}`}
+          href={`${baseUrl}download/${lessonSlug}`}
           target="_blank"
           rel="noopener noreferrer"
         >

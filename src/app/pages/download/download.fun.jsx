@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import {
+  useNavigate,
+  useParams,
+} from 'react-router-dom'
 
 import { courses } from '../../data/courses.map'
 
@@ -14,6 +17,7 @@ const presentationFiles = import.meta.glob(
 
 export function useDownloadPage() {
   const { lessonSlug } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     let foundCourse = null
@@ -30,7 +34,9 @@ export function useDownloadPage() {
     }
 
     if (!foundCourse) {
-      window.location.replace('/404')
+      navigate('/404', {
+        replace: true,
+      })
       return
     }
 
@@ -48,7 +54,9 @@ export function useDownloadPage() {
       )
 
     if (!presentationEntry) {
-      window.location.replace('/404')
+      navigate('/404', {
+        replace: true,
+      })
       return
     }
 

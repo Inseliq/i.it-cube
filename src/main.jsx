@@ -7,10 +7,14 @@ import App from './App.jsx'
 import './app/styles/global.css'
 
 const redirectPath =
-  sessionStorage.getItem('spa-redirect')
+  sessionStorage.getItem(
+    'spa-redirect',
+  )
 
 if (redirectPath) {
-  sessionStorage.removeItem('spa-redirect')
+  sessionStorage.removeItem(
+    'spa-redirect',
+  )
 
   window.history.replaceState(
     null,
@@ -23,7 +27,11 @@ createRoot(
   document.getElementById('root'),
 ).render(
   <StrictMode>
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter
+      basename={
+        import.meta.env.BASE_URL
+      }
+    >
       <App />
     </BrowserRouter>
   </StrictMode>,
