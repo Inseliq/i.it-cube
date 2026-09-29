@@ -13,17 +13,19 @@
 <body>
 
   <script>
-    const path =
+    const base = '/it-cube/'
+
+    const currentPath =
       window.location.pathname +
       window.location.search +
       window.location.hash
 
     sessionStorage.setItem(
       'spa-redirect',
-      path
+      currentPath,
     )
 
-    window.location.replace('/')
+    window.location.replace(base)
   </script>
 
 </body>
