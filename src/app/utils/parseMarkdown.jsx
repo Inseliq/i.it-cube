@@ -245,7 +245,7 @@ export function parseMarkdown(
       elements.push(
         <img
           key={`image-${index}`}
-          src={imageMatch[1].trim()}
+          src={imageMatch[1].trim().startsWith('/') ? `${import.meta.env.BASE_URL.replace(/\/$/, '')}${imageMatch[1].trim()}` : imageMatch[1].trim()}
           alt={imageMatch[2].trim()}
         />,
       )

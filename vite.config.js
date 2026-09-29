@@ -7,5 +7,5 @@ export default defineConfig(({ command }) => ({
   base:
     command === 'serve'
       ? '/'
-      : '/it-cube/',
+      : '/i.it-cube/',
 }))

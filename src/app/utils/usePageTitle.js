@@ -14,7 +14,7 @@ export function usePageTitle() {
   useEffect(() => {
     const pathname = location.pathname
 
-    if (pathname.startsWith('/lesson/')) {
+    if (pathname.startsWith('/information/')) {
       document.title = 'Урок'
       return
     }

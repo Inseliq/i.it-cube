@@ -1,49 +1,27 @@
 export const courses = [
   {
     id: 1,
-    title: '1 курс',
+    code: '1WEB-26',
+    title: '1WEB-26',
     repo: 1,
-    description:
-      'Первый курс обучения веб-разработке',
-
+    level: '1 курс',
+    description: 'Первый год обучения: web-дизайн, HTML, CSS и JavaScript.',
+    accent: 'blue',
     lessons: [
-      {
-        id: 1,
-        title: 'Дизайн',
-        slug: 'design',
-        path: '/lesson/design',
-        description:
-          'Основы дизайна и работа с изображениями',
-        reference: '',
-      },
-      {
-        id: 2,
-        title: 'HTML',
-        slug: 'html',
-        path: '/lesson/html',
-        description: 'Основы HTML',
-        reference: '',
-      }
+      { id: 1, title: 'Дизайн', slug: 'design', path: '/information/design', description: 'Форматы файлов, Photoshop, изображения для web и основы визуального оформления.', reference: '' },
+      { id: 2, title: 'HTML', slug: 'html', path: '/information/html', description: 'Основы HTML и создание структуры web-страницы.', reference: '' },
     ],
   },
-
   {
     id: 2,
-    title: '2 курс',
+    code: '2WEB-25',
+    title: '2WEB-25',
     repo: 2,
-    description:
-      'Второй курс обучения веб-разработке',
-
+    level: '2 курс',
+    description: 'Второй год обучения: PHP, базы данных, SQL и системы управления контентом.',
+    accent: 'violet',
     lessons: [
-      {
-        id: 1,
-        title: 'Клиент-сервер',
-        slug: 'server',
-        path: '/lesson/server',
-        description:
-          'Основы клиент-серверной архитектуры',
-        reference: '',
-      },
+      { id: 1, title: 'Клиент-сервер', slug: 'server', path: '/information/server', description: 'Технология клиент-сервер и первые шаги в серверной разработке.', reference: '' },
     ],
   },
 ]
