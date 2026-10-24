@@ -90,10 +90,9 @@ export function calculateTestResult(test, answers) {
 
   const earnedPoints = details.reduce((sum, item) => sum + item.raw, 0)
   const maxPoints = test.questions.reduce((sum, question) => sum + (question.points ?? 1), 0)
-  const normalizedTotal = details.reduce((sum, item) => sum + item.normalized, 0)
-  const percent = test.questions.length
-    ? Math.round((normalizedTotal / test.questions.length) * 100)
-    : 0
+  // Процент учитывает вес задания (points), а не просто число вопросов.
+  // Иначе оценка не соответствует показанным баллам для тестов с разными весами.
+  const percent = maxPoints > 0 ? Math.round((earnedPoints / maxPoints) * 100) : 0
 
   return {
     earnedPoints,

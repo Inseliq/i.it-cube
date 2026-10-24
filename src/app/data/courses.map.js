@@ -8,7 +8,7 @@ export const courses = [
     description: 'Первый год обучения: web-дизайн, HTML, CSS и JavaScript.',
     accent: 'blue',
     lessons: [
-      { id: 1, title: 'Дизайн', slug: 'design', path: '/information/design', description: 'Форматы файлов, Photoshop, изображения для web и основы визуального оформления.', reference: '' },
+      { id: 1, title: 'Дизайн', slug: 'design', path: '/information/design', description: 'Форматы файлов, Photoshop, изображения для web и основы визуального оформления.', reference: '/information/design' },
       { id: 2, title: 'HTML', slug: 'html', path: '/information/html', description: 'Основы HTML и создание структуры web-страницы.', reference: '' },
     ],
   },

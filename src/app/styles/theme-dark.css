@@ -1,0 +1,234 @@
+:root {
+  color-scheme: dark;
+
+  --bg: #0b1220;
+  --panel: #141f30;
+  --line: #27374c;
+  --muted: #a0b1c7;
+  --text: #edf3fb;
+  --blue: #8ab4ff;
+  --blue-2: #3b82f6;
+  --violet: #ad9cff;
+
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+
+  color: var(--text);
+  background: var(--bg);
+}
+
+body {
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* Шапка, подвал, карточки */
+
+.site-header {
+  background: rgba(11, 18, 32, 0.94);
+}
+
+.site-footer,
+.card,
+.information-card,
+.mobile-menu__panel {
+  background: var(--panel);
+  border-color: var(--line);
+}
+
+.brand img,
+.mobile-menu__brand img {
+  filter: none;
+}
+
+/* Навигация */
+
+.site-nav__link,
+.mobile-menu__link {
+  color: var(--muted);
+}
+
+.site-nav__link--active,
+.mobile-menu__link--active {
+  color: #a4c8ff;
+  background: #203655;
+}
+
+.eyebrow {
+  color: #8ab4ff;
+}
+
+/* Кнопки */
+
+.btn:not(.btn-primary),
+.mobile-menu-button,
+.mobile-menu__close {
+  background: #1c2b40;
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.btn-primary {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #fff;
+}
+
+@media (hover: hover) {
+  .btn-primary:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+  }
+
+  .btn-outline:hover,
+  .btn:not(.btn-primary):hover {
+    background: #263a56;
+    border-color: #5686c6;
+  }
+}
+
+/* Главная и учебные материалы */
+
+.information-course-choice--active {
+  background: #1b304b;
+  border-color: #527fbd;
+  box-shadow: inset 0 0 0 1px #527fbd;
+}
+
+.information-card > span,
+.information-course-choice > span,
+.information-group__level {
+  color: #8ab4ff;
+}
+
+.information-material__arrow,
+.quiz-tile__action {
+  color: #8ab4ff;
+}
+
+.quiz-tile__action > span:last-child,
+.test-question__number,
+.lesson-hero__badge {
+  background: #213b60;
+  color: #a4c8ff;
+}
+
+/* Тестирование */
+
+.test-input,
+.test-option {
+  background: #101a2a;
+  color: var(--text);
+  border-color: #34465e;
+}
+
+.test-option--selected {
+  background: #1a3354;
+  border-color: #659df4;
+}
+
+.test-option__control {
+  background: #101a2a;
+  border-color: #8095b1;
+}
+
+.test-option input:checked + .test-option__control {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.test-facts > div,
+.result-panel__stats > div {
+  border-color: var(--line);
+}
+
+.test-sidebar__bar,
+.result-panel__progress {
+  background: #27374c;
+}
+
+.test-intro__notice {
+  background: #1b304b;
+  color: #bbd5ff;
+}
+
+.test-sidebar__saved {
+  background: #193d34;
+  color: #8ee1bd !important;
+}
+
+.test-clock--urgent strong {
+  color: #ff929c;
+}
+
+/* Статусы */
+
+.status-pill {
+  color: #bed0e5;
+  background: #25364c;
+}
+
+.status-pill--active {
+  background: #1d3c65;
+  color: #a4c8ff;
+}
+
+.status-pill--success {
+  background: #183e32;
+  color: #91e7bb;
+}
+
+.status-pill--error {
+  background: #4a2530;
+  color: #ffadb4;
+}
+
+.test-error {
+  background: #442530;
+  color: #ffb4bc;
+}
+
+/* Результаты */
+
+.result-panel__icon {
+  background: #203b5c;
+  color: #a4c8ff;
+}
+
+.review-item__answers > div {
+  background: #1c2a3e;
+}
+
+/* Содержимое уроков */
+
+.lesson-content p,
+.lesson-content li {
+  color: #bccadd;
+}
+
+.lesson-content a,
+.back-link,
+.lesson-back {
+  color: #91baff;
+}
+
+.lesson-info {
+  background: #1a304b;
+  border-color: #365a82;
+}
+
+.lesson-info--warn {
+  background: #382d1d;
+  border-color: #795c32;
+}
+
+.lesson-info--danger {
+  background: #422630;
+  border-color: #80505a;
+}
+
+/* Выделение текста */
+
+::selection {
+  background: #335c95;
+  color: #fff;
+}

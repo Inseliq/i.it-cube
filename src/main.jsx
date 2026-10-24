@@ -5,22 +5,17 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 
 import './app/styles/global.css'
+import './app/styles/theme-dark.css'
 
-const redirectPath =
-  sessionStorage.getItem(
-    'spa-redirect',
-  )
-
-if (redirectPath) {
-  sessionStorage.removeItem(
-    'spa-redirect',
-  )
-
-  window.history.replaceState(
-    null,
-    '',
-    redirectPath,
-  )
+// Хранилище может быть заблокировано в приватном режиме браузера.
+try {
+  const redirectPath = sessionStorage.getItem('spa-redirect')
+  if (redirectPath) {
+    sessionStorage.removeItem('spa-redirect')
+    window.history.replaceState(null, '', redirectPath)
+  }
+} catch {
+  // Сайт остаётся доступен, даже если sessionStorage отключено.
 }
 
 createRoot(

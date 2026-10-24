@@ -77,5 +77,5 @@ export function useDownloadPage() {
     setTimeout(() => {
       window.close()
     }, 6000)
-  }, [lessonSlug])
+  }, [lessonSlug, navigate])
 }

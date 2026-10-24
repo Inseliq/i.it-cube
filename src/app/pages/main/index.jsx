@@ -7,14 +7,13 @@ export default function MainPage() {
       <div className="information-home__inner">
         <section className="information-home__intro">
           <span className="eyebrow">Interactive Platform</span>
-          <h1>Интерактивные материалы IT-Cube</h1>
+          <h1>Учиться, пробовать, понимать.</h1>
           <p>
-            Платформа для интерактивных учебных материалов, подсказок, тестов и дополнительных
-            элементов занятий.
+            Материалы занятий, практика и тесты — всё для изучения веб-разработки в одном месте.
           </p>
           <div className="information-home__actions">
-            <Link className="btn btn-primary" to="/information">Информация</Link>
-            <Link className="btn" to="/tests">Тесты</Link>
+            <Link className="btn btn-primary" to="/information">Открыть материалы</Link>
+            <Link className="btn" to="/tests">Перейти к тестам</Link>
           </div>
         </section>
 
@@ -22,17 +21,17 @@ export default function MainPage() {
           <article className="information-card">
             <span>01</span>
             <h2>Материалы уроков</h2>
-            <p>Отдельные интерактивные страницы можно будет открывать по адресу /information/...</p>
+            <p>Конспекты и полезные ссылки, к которым можно вернуться после занятия.</p>
           </article>
           <article className="information-card">
             <span>02</span>
             <h2>Практика</h2>
-            <p>Здесь можно размещать тренажёры, задания, подсказки и небольшие учебные активности.</p>
+            <p>Тесты для закрепления знаний с результатами и разбором ответов.</p>
           </article>
           <article className="information-card">
             <span>03</span>
-            <h2>Единая экосистема</h2>
-            <p>Платформа дополняет основной сайт IT-Cube и образовательный дневник.</p>
+            <h2>В своём темпе</h2>
+            <p>Начинайте с простого, сохраняйте прогресс и продолжайте обучение.</p>
           </article>
         </section>
       </div>

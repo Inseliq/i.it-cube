@@ -97,7 +97,7 @@ export default function Header() {
         <aside className="mobile-menu__panel" id="mobile-navigation" aria-label="Мобильная навигация">
           <div className="mobile-menu__head">
             <NavLink to="/" className="mobile-menu__brand" onClick={() => setMenuOpen(false)}>
-              <img src={`${baseUrl}icons/logo.svg`} alt="IT-Куб Пенза" />
+              <img src={`${baseUrl}icons/logo_i.svg`} alt="IT-Куб Пенза" />
             </NavLink>
             <button
               type="button"
