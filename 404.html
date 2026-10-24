@@ -20,11 +20,11 @@
       window.location.search +
       window.location.hash
 
-    sessionStorage.setItem(
-      'spa-redirect',
-      currentPath,
-    )
-
+    try {
+      sessionStorage.setItem('spa-redirect', currentPath)
+    } catch {
+      // Если хранилище недоступно, показываем главную без падения.
+    }
     window.location.replace(base)
   </script>
 
