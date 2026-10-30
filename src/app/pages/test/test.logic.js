@@ -42,7 +42,7 @@ function scoreCheckbox(question, answer = []) {
 
   // Для 4 вариантов: правильное решение по варианту +0.25, ошибка -0.5.
   // Для 6/8 вариантов коэффициенты автоматически становятся 1/6 и -2/6,
-  // либо 1/8 и -2/8. Максимум за checkbox — 1, минимум — 0.
+  // либо 1/8 и -2/8. Максимум за checkbox − 1, минимум − 0.
   const reward = 1 / options.length
   const penalty = 2 / options.length
 

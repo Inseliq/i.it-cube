@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { testGroups } from '../../data/tests.map'
-import { formatDuration, getMaxAttempts, getRemainingAttempts, getTimeLimit, readTestState } from '../../utils/testSession'
+import { formatDuration, getCreditedAttempt, getMaxAttempts, getRemainingAttempts, getTimeLimit, readTestState } from '../../utils/testSession'
 import '../../styles/css/tests.css'
 
 const difficultyLabels = { 1: 'Простой', 2: 'Лёгкий', 3: 'Средний', 4: 'Сложный', 5: 'Контрольный' }
@@ -17,10 +17,12 @@ function TestTile({ test }) {
     return () => { window.removeEventListener('focus', sync); window.removeEventListener('storage', sync); document.removeEventListener('visibilitychange', visible) }
   }, [test])
   const remaining = getRemainingAttempts(test, progress)
+  const credited = getCreditedAttempt(test, progress)
   const status = progress.active ? 'Продолжить' : progress.lastResult ? 'Результат' : remaining === 0 ? 'Закрыт' : 'Начать тест'
   return <Link className="card quiz-tile" to={test.path}>
-    <div className="quiz-tile__top"><span className="quiz-tile__difficulty">{difficultyLabels[test.difficulty] ?? 'Тест'}</span><span className={`status-pill ${progress.active ? 'status-pill--active' : progress.lastResult ? (progress.hasPassed ? 'status-pill--success' : 'status-pill--error') : ''}`}>{progress.active ? 'В процессе' : progress.lastResult ? (progress.hasPassed ? 'Зачтён' : 'Не зачтён') : 'Доступен'}</span></div>
+    <div className="quiz-tile__top"><span className="quiz-tile__difficulty">{difficultyLabels[test.difficulty] ?? 'Тест'}</span><span className={`status-pill ${progress.active ? 'status-pill--active' : progress.lastResult ? (credited?.passed ? 'status-pill--success' : 'status-pill--error') : ''}`}>{progress.active ? 'В процессе' : progress.lastResult ? (credited?.passed ? 'Зачтён' : 'Не зачтён') : 'Доступен'}</span></div>
     <h3>{test.title}</h3><p>{test.description}</p>
+    {credited && <p className="quiz-tile__credited">Зачётный результат: <strong>{credited.percent}% · оценка {credited.grade}</strong></p>}
     <div className="quiz-tile__facts"><span>☷ {test.questions.length} вопросов</span><span>◷ {formatDuration(getTimeLimit(test))}</span><span>↻ {getMaxAttempts(test) === Infinity ? 'Без лимита' : `${remaining} попыт. осталось`}</span></div>
     <div className="quiz-tile__action"><span>{status}</span><span aria-hidden="true">↗</span></div>
   </Link>

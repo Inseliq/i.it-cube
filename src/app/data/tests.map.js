@@ -14,8 +14,9 @@ export const testGroups = [
         visible: true,
         showAnswersAfterFinish: true,
         repeat: true, // устаревший параметр для совместимости: используйте maxAttempts
-        maxAttempts: 2, // null или 0 — бесконечно; 1, 2, 3... — ограничение
-        timeLimitSeconds: 180, // время на одну попытку, секунды; 0 — без таймера
+        maxAttempts: 3, // 0 или null − бесконечно; 1–3 − лимит; 4+ = 3
+        resultMode: 'best', // 'best' − лучшая попытка, 'last' − последняя
+        timeLimitSeconds: 180, // время на одну попытку, секунды; 0 − без таймера
         passingPercent: 45, // тест зачтён при достижении этого процента
         difficulty: 2,
         questions: [
@@ -71,7 +72,8 @@ export const testGroups = [
         visible: true,
         showAnswersAfterFinish: true,
         repeat: true,
-        maxAttempts: null, // бесконечное количество попыток
+        maxAttempts: 0, // 0 − бесконечное количество попыток
+        resultMode: 'last', // при бесконечном лимите каждая попытка оценивается отдельно
         timeLimitSeconds: 600, // 10 минут
         passingPercent: 45,
         difficulty: 2,

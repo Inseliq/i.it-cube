@@ -2,9 +2,10 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 const pageTitles = {
-  '/': 'Interactive Platform — IT-Cube',
-  '/information': 'Информация — IT-Cube',
-  '/tests': 'Тесты — IT-Cube',
+  '/': 'Интерактивная платформа − IT-Cube',
+  '/tests': 'Тесты − IT-Cube',
+  '/randomizer': 'Рандомайзер − IT-Cube',
+  '/wheel': 'Колесо фортуны − IT-Cube',
 }
 
 export function usePageTitle() {
@@ -14,15 +15,15 @@ export function usePageTitle() {
     const pathname = location.pathname
 
     if (pathname.startsWith('/information/')) {
-      document.title = 'Интерактивный материал — IT-Cube'
+      document.title = 'Интерактивный материал − IT-Cube'
       return
     }
 
     if (pathname.startsWith('/test/')) {
-      document.title = 'Тест — IT-Cube'
+      document.title = 'Тест − IT-Cube'
       return
     }
 
-    document.title = pageTitles[pathname] ?? 'Interactive Platform — IT-Cube'
+    document.title = pageTitles[pathname] ?? 'Interactive Platform − IT-Cube'
   }, [location.pathname])
 }

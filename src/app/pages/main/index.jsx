@@ -9,7 +9,7 @@ export default function MainPage() {
           <span className="eyebrow">Interactive Platform</span>
           <h1>Учиться, пробовать, понимать.</h1>
           <p>
-            Материалы занятий, практика и тесты — всё для изучения веб-разработки в одном месте.
+            Материалы занятий, тесты и полезные инструменты − всё для занятий по веб-разработке в одном месте.
           </p>
           <div className="information-home__actions">
             <Link className="btn btn-primary" to="/information">Открыть материалы</Link>
@@ -30,8 +30,9 @@ export default function MainPage() {
           </article>
           <article className="information-card">
             <span>03</span>
-            <h2>В своём темпе</h2>
-            <p>Начинайте с простого, сохраняйте прогресс и продолжайте обучение.</p>
+            <h2>Инструменты</h2>
+            <p>Рандомайзер и колесо фортуны для случайного выбора.</p>
+            <div className="information-card__links"><Link to="/randomizer">Рандомайзер ↗</Link><Link to="/wheel">Колесо ↗</Link></div>
           </article>
         </section>
       </div>

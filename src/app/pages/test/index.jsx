@@ -4,7 +4,7 @@ import { getTestBySlug } from '../../data/tests.map'
 import { calculateTestResult } from './test.logic'
 import {
   answerTestQuestion, beginTest, canPersistTest, formatDuration,
-  getMaxAttempts, getPassingPercent, getRemainingAttempts, getTestStorageKey,
+  canRevealAnswers, getCreditedAttempt, getResultMode, getMaxAttempts, getPassingPercent, getRemainingAttempts, getTestStorageKey,
   getTimeLimit, readTestState, submitTest,
 } from '../../utils/testSession'
 import '../../styles/css/test.css'
@@ -55,22 +55,42 @@ function AttemptLabel({ test, state }) {
   return <>{max === Infinity ? 'Без ограничения попыток' : `Попыток: ${state.attemptsUsed} из ${max}${!state.active ? ` · осталось ${remaining}` : ''}`}</>
 }
 
+function AttemptsTable({ test, state }) {
+  const credited = getCreditedAttempt(test, state)
+  return <section className="card attempts-section" aria-labelledby="attempts-title">
+    <div className="attempts-heading"><div><span className="eyebrow">История прохождений</span><h2 id="attempts-title">Все попытки</h2></div>
+      <span className="status-pill">Засчитывается {getResultMode(test) === 'best' ? 'лучшая' : 'последняя'}</span></div>
+    <div className="attempts-scroll" role="region" aria-label="Таблица результатов попыток" tabIndex={0}>
+      <table className="attempts-table"><thead><tr><th scope="col">Попытка</th><th scope="col">Верных ответов</th><th scope="col">Результат</th><th scope="col">Оценка</th></tr></thead>
+      <tbody>{state.history.map((item) => <tr key={item.number} className={credited?.number === item.number ? 'attempts-table__credited' : ''}>
+        <th scope="row">№ {item.number}{credited?.number === item.number && <span className="attempts-table__mark">Зачётная</span>}</th>
+        <td>{Number.isInteger(item.correctCount) ? `${item.correctCount} из ${test.questions.length}` : '−'}</td>
+        <td><strong>{item.percent}%</strong></td><td>{item.grade ?? '−'}</td>
+      </tr>)}</tbody></table>
+    </div>
+    <p className="attempts-help">{getResultMode(test) === 'best' ? 'Лучший результат остаётся зачётным, даже если следующая попытка хуже.' : 'При новой попытке зачётный результат заменяется последним, даже если он ниже предыдущего.'}</p>
+  </section>
+}
+
 function ResultView({ test, state, onStart, error }) {
   const last = state.lastResult
   const result = calculateTestResult(test, last.answers ?? {})
+  const credited = getCreditedAttempt(test, state) ?? last
   const remaining = getRemainingAttempts(test, state)
+  const showReview = canRevealAnswers(test, state)
   return <div className="test-content">
     <Link to="/tests" className="back-link">← Все тесты</Link>
     <section className="card result-panel">
-      <div className="result-panel__icon" aria-hidden="true">{last.passed ? '✓' : '!'}</div>
+      <div className="result-panel__icon" aria-hidden="true">{credited.passed ? '✓' : '!'}</div>
       <span className="eyebrow">Попытка №{last.number} завершена</span>
-      <h1>{last.passed ? 'Тест зачтён!' : 'Тест пока не зачтён'}</h1>
-      <p>{last.timedOut ? 'Время вышло. Мы сохранили и проверили ответы, которые вы успели дать.' : 'Ответы проверены, результат сохранён в этом браузере.'}</p>
-      <div className="result-panel__score"><strong>{last.percent}%</strong><span>Оценка {result.grade} · проходной балл {getPassingPercent(test)}%</span></div>
-      <div className="result-panel__progress" role="progressbar" aria-label="Результат теста" aria-valuemin={0} aria-valuemax={100} aria-valuenow={last.percent}><span style={{ width: `${last.percent}%` }} /></div>
+      <h1>{credited.passed ? 'Тест зачтён!' : 'Тест пока не зачтён'}</h1>
+      <p>{last.timedOut ? 'Время вышло. Ответы, которые вы успели дать, сохранены и проверены.' : 'Ответы проверены, результат сохранён в этом браузере.'}</p>
+      <div className="result-panel__score"><strong>{credited.percent}%</strong><span>Зачётная оценка {credited.grade} · {getResultMode(test) === 'best' ? 'лучшая' : 'последняя'} попытка №{credited.number}</span></div>
+      <div className="result-panel__progress" role="progressbar" aria-label="Зачётный результат теста" aria-valuemin={0} aria-valuemax={100} aria-valuenow={credited.percent}><span style={{ width: `${credited.percent}%` }} /></div>
+      <p className="test-hint">Последнее прохождение: {last.percent}% · оценка {last.grade}. Для зачёта необходимо {getPassingPercent(test)}%.</p>
       <div className="result-panel__stats">
-        <div><span>Баллы</span><strong>{formatPoints(result.earnedPoints)} / {formatPoints(result.maxPoints)}</strong></div>
-        <div><span>Вопросы</span><strong>{test.questions.length}</strong></div>
+        <div><span>Зачётные баллы</span><strong>{Number.isFinite(credited.earnedPoints) ? formatPoints(credited.earnedPoints) : '−'} / {formatPoints(credited.maxPoints ?? result.maxPoints)}</strong></div>
+        <div><span>Правильных ответов (последняя)</span><strong>{result.details.filter((detail) => detail.correct).length} / {test.questions.length}</strong></div>
         <div><span>Попытки</span><strong>{getMaxAttempts(test) === Infinity ? state.attemptsUsed : `${state.attemptsUsed} / ${getMaxAttempts(test)}`}</strong></div>
       </div>
       {error && <p className="test-error" role="alert">{error}</p>}
@@ -78,10 +98,12 @@ function ResultView({ test, state, onStart, error }) {
         {remaining > 0 && <button type="button" className="btn btn-primary" onClick={onStart}>Пройти ещё раз <span aria-hidden="true">→</span></button>}
         <Link to="/tests" className="btn btn-outline">Вернуться к тестам</Link>
       </div>
-      {remaining === 0 && <p className="test-hint">Все доступные попытки использованы. Результат останется сохранённым при обновлении страницы.</p>}
+      {!showReview && test.showAnswersAfterFinish && <p className="test-intro__notice">Правильные ответы появятся после последней доступной попытки. Сейчас их просмотр закрыт.</p>}
+      {remaining === 0 && <p className="test-hint">Лимит попыток исчерпан. История останется сохранённой при обновлении страницы.</p>}
     </section>
-    {test.showAnswersAfterFinish && <section className="result-review" aria-labelledby="review-title">
-      <div className="section-heading"><span className="eyebrow">Проверка ответов</span><h2 id="review-title">Разбор заданий</h2><p>Ваши ответы и правильные решения</p></div>
+    <AttemptsTable test={test} state={state} />
+    {showReview && <section className="result-review" aria-labelledby="review-title">
+      <div className="section-heading"><span className="eyebrow">Проверка ответов</span><h2 id="review-title">Разбор последней попытки</h2><p>Ваши ответы и правильные решения</p></div>
       {result.details.map((detail, index) => <article className="card review-item" key={detail.question.id}>
         <div className="review-item__heading"><div><span className="eyebrow">Вопрос {index + 1}</span><h3>{detail.question.question}</h3></div><span className={`status-pill ${detail.correct ? 'status-pill--success' : 'status-pill--error'}`}>{detail.correct ? '✓ Верно' : '× Ошибка'}</span></div>
         <div className="review-item__answers"><div><span>Ваш ответ</span><p>{answerText(detail.question, last.answers?.[detail.question.id])}</p></div>{!detail.correct && <div><span>Правильный ответ</span><p>{correctAnswerText(detail.question)}</p></div>}</div>
@@ -153,6 +175,7 @@ function TestContent({ test }) {
         <div><span>Попытки</span><strong>{getMaxAttempts(test) === Infinity ? 'Не ограничены' : `${remaining} из ${getMaxAttempts(test)}`}</strong></div>
         <div><span>Для зачёта</span><strong>{getPassingPercent(test)}%</strong></div>
       </div>
+      <p className="test-hint">Учитывается {getResultMode(test) === 'best' ? 'лучшая' : 'последняя'} попытка. {getMaxAttempts(test) === Infinity ? 'Ответы доступны после каждого прохождения.' : 'Правильные ответы откроются после последней попытки.'}</p>
       <div className="test-intro__notice"><span aria-hidden="true">ⓘ</span><p>Попытка засчитывается в момент начала. Ответы сохраняются автоматически. Если время истечёт, тест завершится сам.</p></div>
       {error && <p className="test-error" role="alert">{error}</p>}
       {!storageReady && <p className="test-error" role="alert">Браузер запрещает сохранение данных. Разрешите localStorage для этого сайта.</p>}

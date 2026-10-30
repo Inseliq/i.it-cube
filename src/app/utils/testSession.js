@@ -1,11 +1,31 @@
-import { calculateTestResult } from '../pages/test/test.logic.js'
+import { calculateTestResult, getGrade } from '../pages/test/test.logic.js'
 
 const PREFIX = 'it-cube:quiz:v2:'
 
 export function getMaxAttempts(test) {
   if (test.maxAttempts === null || test.maxAttempts === 0) return Infinity
-  if (Number.isInteger(test.maxAttempts) && test.maxAttempts > 0) return test.maxAttempts
+  if (Number.isInteger(test.maxAttempts) && test.maxAttempts > 0) return Math.min(3, test.maxAttempts)
   return test.repeat === false ? 1 : Infinity
+}
+
+export function getResultMode(test) {
+  if (getMaxAttempts(test) === Infinity) return 'last'
+  return test.resultMode === 'last' ? 'last' : 'best'
+}
+
+// The record which counts toward the final assessment. For ties keep the first best run.
+export function getCreditedAttempt(test, state) {
+  const history = Array.isArray(state.history) ? state.history : []
+  if (!history.length) return null
+  if (getMaxAttempts(test) === Infinity || getResultMode(test) === 'last') return history[history.length - 1]
+  return history.reduce((best, current) => current.percent > best.percent ? current : best, history[0])
+}
+
+// With limited attempts don't show solutions until the final allowed attempt is used.
+export function canRevealAnswers(test, state) {
+  return Boolean(test.showAnswersAfterFinish) && (
+    getRemainingAttempts(test, state) === 0 || getMaxAttempts(test) === Infinity
+  )
 }
 
 export function getTimeLimit(test) {
@@ -100,7 +120,7 @@ export function readTestState(test, now = Date.now()) {
         ...state,
         attemptsUsed: parsed.attemptsUsed,
         hasPassed: parsed.hasPassed === true,
-        history: Array.isArray(parsed.history) ? parsed.history.slice(-20) : [],
+        history: Array.isArray(parsed.history) ? parsed.history.filter((item) => Number.isInteger(item?.number) && Number.isFinite(item?.percent)).slice(-100).map((item) => ({ ...item, grade: getGrade(item.percent) })) : [],
         lastResult: parsed.lastResult && typeof parsed.lastResult === 'object' ? parsed.lastResult : null,
         active: parsed.active && typeof parsed.active === 'object' &&
           typeof parsed.active.id === 'string' && Number.isFinite(parsed.active.startedAt)
@@ -158,6 +178,7 @@ export function completeTest(test, state, now = Date.now()) {
     earnedPoints: result.earnedPoints,
     maxPoints: result.maxPoints,
     passed,
+    correctCount: result.details.filter((detail) => detail.correct).length,
     timedOut,
     finishedAt: timedOut ? state.active.deadlineAt : now,
     startedAt: state.active.startedAt,
@@ -170,7 +191,9 @@ export function completeTest(test, state, now = Date.now()) {
     lastResult: summary,
     hasPassed: state.hasPassed || passed,
     history: [...state.history, {
-      number: summary.number, percent: summary.percent, passed, timedOut,
+      number: summary.number, percent: summary.percent, grade: summary.grade,
+      correctCount: summary.correctCount, earnedPoints: summary.earnedPoints,
+      maxPoints: summary.maxPoints, passed, timedOut,
       finishedAt: summary.finishedAt }].slice(-20),
   }
   persist(test, next)
