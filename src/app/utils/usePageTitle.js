@@ -6,6 +6,7 @@ const pageTitles = {
   '/tests': 'Тесты − IT-Cube',
   '/randomizer': 'Рандомайзер − IT-Cube',
   '/wheel': 'Колесо фортуны − IT-Cube',
+  '/colloquium': 'Коллоквиум – IT-Cube',
 }
 
 export function usePageTitle() {

@@ -1,0 +1,366 @@
+/* Коллоквиум использует переменные тёмной темы платформы. */
+.colloquium-page {
+  width: 100%;
+  min-width: 0;
+}
+.colloquium-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: 22px;
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 700;
+}
+.colloquium-start {
+  max-width: 660px;
+  margin: 20px auto 0;
+  padding: clamp(22px, 5vw, 44px);
+  border: 1px solid #2b3f56;
+  background: #121e30;
+}
+.colloquium-start__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.colloquium-start__step {
+  font-size: 12px;
+  color: #95a9bf;
+}
+.colloquium-start h1 {
+  margin: 17px 0 10px;
+  font-size: clamp(32px, 5vw, 50px);
+  letter-spacing: -0.045em;
+}
+.colloquium-start__intro {
+  max-width: 500px;
+  font-size: 16px;
+  color: #b2c2d5;
+  line-height: 1.7;
+}
+.colloquium-start form {
+  display: grid;
+  align-items: start;
+  gap: 12px;
+  margin-top: 35px;
+}
+.colloquium-start label {
+  font-size: 14px;
+  font-weight: 720;
+}
+.colloquium-start input {
+  width: 100%;
+  min-height: 60px;
+  min-width: 0;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: #0b1523;
+  border: 1px solid #526781;
+  color: #eff6ff;
+  font-size: 24px;
+  font-weight: 740;
+  letter-spacing: 0.035em;
+}
+.colloquium-start input::placeholder {
+  color: #6e8095;
+}
+.colloquium-start input[aria-invalid="true"] {
+  border-color: #f08c98;
+}
+.colloquium-start small {
+  color: #95a9bf;
+  line-height: 1.6;
+}
+.colloquium-start__error {
+  margin: 0;
+  color: #ffadb5;
+  font-size: 14px;
+}
+.colloquium-start form > .btn {
+  margin-top: 15px;
+  width: fit-content;
+}
+.colloquium-start__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-top: 25px;
+  margin-top: 38px;
+  border-top: 1px solid #293a50;
+  font-size: 12px;
+  color: #90a1b6;
+}
+.colloquium-start__bottom span:nth-child(odd) {
+  color: #90bdfb;
+  font-weight: 850;
+}
+.colloquium-start__bottom span:nth-child(3) {
+  margin-inline-start: auto;
+}
+.colloquium-notice {
+  max-width: 660px;
+  padding: 44px;
+  margin: 25px auto;
+  text-align: center;
+}
+.colloquium-notice__icon {
+  display: block;
+  font-size: 56px;
+  color: #9abdf2;
+  margin-bottom: 12px;
+}
+.colloquium-notice h1 {
+  font-size: clamp(27px, 4vw, 39px);
+}
+.colloquium-notice p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+.colloquium-notice .btn {
+  margin-top: 12px;
+}
+
+.colloquium-session__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.colloquium-session__header h1 {
+  margin: 10px 0 8px;
+  font-size: clamp(29px, 4.5vw, 48px);
+  letter-spacing: -0.04em;
+}
+.colloquium-session__header p {
+  max-width: 660px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+  font-size: 14px;
+}
+.colloquium-session__header > .btn {
+  flex: none;
+}
+
+.colloquium-deck-shell {
+  position: relative;
+  overflow: hidden;
+  margin-top: 24px;
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse 46% 53% at 50% 53%, rgba(47, 90, 154, 0.16), transparent 90%),
+    radial-gradient(ellipse 60% 60% at 50% 50%, transparent 55%, rgba(49, 85, 140, 0.085) 100%);
+  border: 1px solid rgba(126, 160, 200, 0.12);
+}
+.colloquium-deck {
+  position: relative;
+  height: 460px;
+  outline-offset: -6px;
+  --spread: 175px;
+}
+.colloquium-deck__help {
+  font-size: 12px;
+  color: #8b9db2;
+  margin: 0 0 18px;
+  text-align: center;
+  padding-inline: 12px;
+}
+.colloquium-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: min(260px, 28vw);
+  height: 355px;
+  padding: 19px;
+  border: 1px solid #365069;
+  border-radius: 17px;
+  background: linear-gradient(145deg, #0c1724, #101e2e 86%);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  text-align: start;
+  font: inherit;
+  color: #eaf1fb;
+  transform-origin: center 80%;
+  transform: translate(-50%, -50%) translateX(calc(var(--offset) * var(--spread))) rotate(calc(var(--offset) * 10deg))
+    scale(calc(1 - var(--magnitude) * 0.075));
+  opacity: calc(1 - var(--magnitude) * 0.23);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.colloquium-card--active {
+  border-color: #7092c6;
+  box-shadow:
+    0 20px 70px rgba(5, 11, 20, 0.65),
+    0 0 0 1px rgba(107, 158, 237, 0.28);
+  cursor: default;
+  opacity: 1;
+}
+.colloquium-card__art,
+.colloquium-card__image {
+  width: 100%;
+  min-height: 126px;
+  height: 126px;
+  border-radius: 11px;
+  background: linear-gradient(145deg, #1d3145, #233954);
+  color: #98b8d8;
+  object-fit: cover;
+}
+.colloquium-card__art {
+  display: grid;
+  place-items: center;
+}
+.colloquium-card__art svg {
+  width: 86px;
+  height: 86px;
+}
+.colloquium-card__number {
+  font-size: 16px;
+  text-align: center;
+  color: #8ebcff;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.colloquium-card__question {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.47;
+  letter-spacing: -0.015em;
+  overflow-wrap: anywhere;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.colloquium-session__controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+.colloquium-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 11px 20px;
+  color: #dceaf9;
+  border: 1px solid #3b536d;
+  background: #18273a;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+}
+.colloquium-session__counter {
+  min-width: 65px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: #b8cbe2;
+  font-weight: 750;
+}
+@media (hover: hover) {
+  .colloquium-card:not(.colloquium-card--active):hover {
+    border-color: #85b6ec;
+    opacity: 0.9;
+  }
+  .colloquium-control:hover {
+    background: #203753;
+    border-color: #6b91c3;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .colloquium-card {
+    transition:
+      transform 0.34s cubic-bezier(0.2, 0, 0, 1),
+      opacity 0.28s,
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .colloquium-control {
+    transition:
+      background-color 0.15s,
+      border-color 0.15s;
+  }
+}
+@media (max-width: 900px) {
+  .colloquium-deck {
+    --spread: 145px;
+  }
+  .colloquium-card {
+    width: 240px;
+  }
+}
+@media (max-width: 640px) {
+  .colloquium-start {
+    padding: 24px 19px;
+  }
+  .colloquium-start form > .btn {
+    width: 100%;
+  }
+  .colloquium-start__bottom {
+    font-size: 11px;
+  }
+  .colloquium-session__header {
+    align-items: start;
+  }
+  .colloquium-session__header > .btn {
+    width: 100%;
+  }
+  .colloquium-deck-shell {
+    margin-top: 18px;
+    border-radius: 17px;
+  }
+  .colloquium-deck {
+    height: 545px;
+    touch-action: pan-x;
+  }
+  .colloquium-card {
+    width: min(280px, calc(100% - 40px));
+    height: 360px;
+    padding: 18px;
+    top: 50%;
+    transform: translate(-50%, -50%) translateY(calc(var(--offset) * 66px)) scale(calc(1 - var(--magnitude) * 0.075));
+  }
+  .colloquium-card__art,
+  .colloquium-card__image {
+    min-height: 115px;
+    height: 115px;
+  }
+  .colloquium-card__question {
+    font-size: 15px;
+  }
+  .colloquium-deck__help {
+    font-size: 11px;
+  }
+  .colloquium-session__controls {
+    gap: 9px;
+  }
+  .colloquium-control {
+    flex: 1;
+    padding: 10px;
+  }
+  .colloquium-session__counter {
+    min-width: 50px;
+  }
+}
+@media (max-width: 340px) {
+  .colloquium-card {
+    width: calc(100% - 34px);
+  }
+  .colloquium-control span {
+    display: none;
+  }
+  .colloquium-start__bottom {
+    gap: 7px;
+  }
+}

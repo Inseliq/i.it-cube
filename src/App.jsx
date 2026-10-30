@@ -6,6 +6,7 @@ import TestsPage from './app/pages/tests'
 import TestPage from './app/pages/test'
 import RandomizerPage from './app/pages/randomizer'
 import WheelPage from './app/pages/wheel'
+import ColloquiumPage from './app/pages/colloquium'
 import ErrorPage from './app/pages/error/error'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/test/:testSlug" element={<TestPage />} />
         <Route path="/randomizer" element={<RandomizerPage />} />
         <Route path="/wheel" element={<WheelPage />} />
+        <Route path="/colloquium" element={<ColloquiumPage />} />
       </Route>
 
       <Route path="/404" element={<ErrorPage />} />

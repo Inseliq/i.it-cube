@@ -6,7 +6,27 @@ import '../../styles/css/tests.css'
 
 const difficultyLabels = { 1: 'Простой', 2: 'Лёгкий', 3: 'Средний', 4: 'Сложный', 5: 'Контрольный' }
 
-function TestTile({ test }) {
+function ColloquiumTile({ test }) {
+  return <article className="card quiz-tile quiz-tile--colloquium">
+    <div className="quiz-tile__top">
+      <span className="quiz-tile__difficulty">{difficultyLabels[test.difficulty] ?? 'Коллоквиум'}</span>
+      <span className={`status-pill ${test.active ? 'status-pill--active' : ''}`}>
+        {test.active ? 'Доступен' : 'Недоступен'}
+      </span>
+    </div>
+    <h3>{test.title}</h3>
+    <p>{test.description}</p>
+    <div className="quiz-tile__facts"><span>Устный формат</span><span>Вопросы по вариантам</span></div>
+    {test.active ? <Link className="quiz-tile__action quiz-tile__action--link" to={`${test.path}?group=${test.year}`}>
+      <span>Открыть коллоквиум</span><span aria-hidden="true">↗</span>
+    </Link> : <div className="quiz-tile__action">
+      <button type="button" className="quiz-tile__disabled" disabled>Пока не доступен</button>
+      <span aria-hidden="true">⌛</span>
+    </div>}
+  </article>
+}
+
+function RegularTestTile({ test }) {
   const [progress, setProgress] = useState(() => readTestState(test))
   useEffect(() => {
     const sync = () => setProgress(readTestState(test))
@@ -26,6 +46,10 @@ function TestTile({ test }) {
     <div className="quiz-tile__facts"><span>☷ {test.questions.length} вопросов</span><span>◷ {formatDuration(getTimeLimit(test))}</span><span>↻ {getMaxAttempts(test) === Infinity ? 'Без лимита' : `${remaining} попыт. осталось`}</span></div>
     <div className="quiz-tile__action"><span>{status}</span><span aria-hidden="true">↗</span></div>
   </Link>
+}
+
+function TestTile({ test }) {
+  return test.type === 'colloquium' ? <ColloquiumTile test={test} /> : <RegularTestTile test={test} />
 }
 
 export default function TestsPage() {

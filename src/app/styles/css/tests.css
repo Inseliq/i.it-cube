@@ -127,3 +127,10 @@
     gap: 9px;
   }
 }
+
+/* Коллоквиум — отдельный тип карточки, без оценок и попыток теста. */
+.quiz-tile--colloquium .quiz-tile__facts { margin-top: auto; }
+.quiz-tile__action--link { min-height: 48px; }
+.quiz-tile__action--link:hover { color: #b3d4ff; }
+.quiz-tile__disabled { border: 0; background: transparent; color: var(--muted); font: inherit; text-align: left; padding: 0; }
+.quiz-tile--colloquium .status-pill { white-space: nowrap; }
