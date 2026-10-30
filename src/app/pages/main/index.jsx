@@ -12,7 +12,7 @@ export default function MainPage() {
             Материалы занятий, тесты и полезные инструменты − всё для занятий по веб-разработке в одном месте.
           </p>
           <div className="information-home__actions">
-            <Link className="btn btn-primary" to="/information">Открыть материалы</Link>
+            <Link className="btn btn-primary" to="hhttps://inseliq.github.io/it-cube/courses">Открыть материалы</Link>
             <Link className="btn" to="/tests">Перейти к тестам</Link>
           </div>
         </section>
