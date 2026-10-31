@@ -17,7 +17,7 @@ const regularTestGroups = [
         visible: true,
         showAnswersAfterFinish: true, // при двух попытках разбор после второй
         repeat: true,
-        maxAttempts: 2,
+        maxAttempts: 3,
         resultMode: 'best',
         timeLimitSeconds: 2700, // 45 минут в секундах
         passingPercent: 50,
